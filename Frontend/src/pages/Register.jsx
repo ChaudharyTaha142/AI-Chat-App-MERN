@@ -18,7 +18,7 @@ const Register = () => {
         console.log(form);
 
         // FIX: Changed https to http for the API endpoint
-        axios.post("http://localhost:3000/api/auth/register", {
+        axios.post("https://ai-chat-app-mern.onrender.com/api/auth/register", {
             email: form.email,
             fullName: {
                 firstName: form.firstname,

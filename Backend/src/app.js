@@ -4,7 +4,7 @@ const cors = require('cors');
 /* Importing Routes */
 const authRoutes = require('./routes/auth.routes');
 const chatRoutes = require('./routes/chat.routes');
-
+const path = require('path');
 const app = express();
 
 /* Middlewares */
@@ -20,5 +20,10 @@ app.use(cors({
 /* Using Routes */
 app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
+app.use( express.static(path.join(__dirname, '../public')) );
+
+app.get("*name", (req, res) => {
+    res.sendFile( path.join(__dirname, '../public/index.html') );
+});
 
 module.exports = app;
