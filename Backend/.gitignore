@@ -1,0 +1,13 @@
+Environment Variables - Aapki secret keys, passwords, etc.
+.env
+
+Dependencies - Sabse bara folder
+/node_modules
+
+Logs - Fazool log files
+logs
+.log
+npm-debug.log
+
+Production folder (agar kabhi banayein)
+/build

@@ -1,0 +1,63 @@
+/* Sidebar */
+.chat-sidebar { width:300px; flex-shrink:0; border-right:1px solid var(--color-border); background: linear-gradient(180deg, var(--color-surface), var(--color-bg-alt)); display:flex; flex-direction:column; position:fixed; top:0; bottom:0; left:-320px; z-index:40; transition: transform var(--transition-fast); padding-top:52px; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 8px 30px rgba(2,6,23,0.06); }
+.chat-sidebar.open { transform: translateX(320px); }
+@media (min-width:960px) { .chat-sidebar { position:static; transform:none; left:0; padding-top:0; } }
+.sidebar-header { display:flex; align-items:center; justify-content:space-between; padding: var(--space-4); border-bottom:1px solid var(--color-border); gap:8px; }
+.sidebar-header h2 { margin:0; font-size:1.05rem; font-weight: 700; color: var(--color-text); letter-spacing: -0.01em; display:flex; align-items:center; height:36px; line-height:36px; }
+.small-btn {
+	font: inherit;
+	background: transparent;
+	color: var(--color-primary);
+	border: 1px solid rgba(124,58,237,0.12);
+	border-radius:999px;
+	padding:0 14px;
+	height:36px;
+	cursor:pointer;
+	display:inline-flex;
+	align-items:center;
+	gap:8px;
+	font-size:0.85rem;
+	font-weight:600;
+	box-shadow: 0 4px 14px rgba(124,58,237,0.06);
+}
+.small-btn:hover { background: rgba(124,58,237,0.04); }
+.chat-list { display:flex; flex-direction:column; gap:12px; padding: var(--space-3); overflow-y:auto; }
+.chat-list-item {
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:12px;
+	text-align:left;
+	background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+	border:1px solid transparent;
+	padding: 12px 20px; /* increased right padding so actions have breathing room */
+	border-radius:14px;
+	cursor:default;
+	font: inherit;
+	color: var(--color-text);
+	position:relative;
+	transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s, background .18s;
+}
+.chat-list-item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(2,6,23,0.06); }
+.chat-list-item.active { border: 1px solid var(--color-primary); box-shadow: 0 8px 26px rgba(124,58,237,0.12); transform: translateY(-3px); background: rgba(124,58,237,0.04); }
+.chat-item-left { margin-right: 10px; display:flex; align-items:center; }
+.avatar { width:36px; height:36px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:700; color: #ffffff; background: linear-gradient(135deg, rgba(124,58,237,1), rgba(109,40,217,0.95)); box-shadow: 0 6px 14px rgba(124,58,237,0.08); font-size:0.78rem; letter-spacing:0.02em; }
+
+/* Helper to completely hide the avatar if desired */
+.avatar--hidden { display:none !important; }
+.chat-item-main { flex:1; display:flex; align-items:center; }
+.chat-item-btn { all: unset; cursor:pointer; display:block; text-align:left; width:100%; }
+.chat-item-btn .title-line { font-size: 0.98rem; font-weight: 600; line-height:1.25; color: var(--color-text); }
+.chat-actions { display:flex; gap:8px; align-items:center; margin-left:8px; margin-right:4px; opacity:0; transform: translateX(6px); transition: opacity .18s, transform .18s; }
+.chat-list-item:hover .chat-actions, .chat-list-item.active .chat-actions { opacity:1; transform:none; }
+.chat-action-btn { background: transparent; border: none; cursor: pointer; color: var(--color-text-muted); padding:8px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; }
+.chat-action-btn svg { display:block; color: inherit; width:16px; height:16px; }
+.chat-action-btn.edit:hover { background: rgba(124,58,237,0.06); color: var(--color-primary); }
+.chat-action-btn.delete:hover { background: rgba(220, 38, 38, 0.06); color: var(--color-danger); }
+.chat-action-btn:focus { outline: 2px solid rgba(100,100,100,0.12); outline-offset:2px; }
+.chat-delete-btn { display:none; }
+.chat-list-item .meta-line { font-size:0.65rem; color: var(--color-text-muted); }
+.empty-hint { margin: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted); }
+/* Sidebar backdrop */
+.sidebar-backdrop { position:fixed; inset:0; background: rgba(0,0,0,0.35); border:none; padding:0; margin:0; cursor:pointer; z-index:35; }
+@media (min-width:960px) { .sidebar-backdrop { display:none; } }

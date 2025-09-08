@@ -1,0 +1,180 @@
+/* STEP 1: Updated Theme File
+  - Light theme is now the default in :root.
+  - Dark theme is now applied using `html[data-theme="dark"]` which our button will control.
+*/
+
+:root {
+  /* --- Light Theme (Default) --- */
+  /* Palette */
+  --color-bg: #ffffff;
+  --color-bg-alt: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-border: #d0d7de;
+  --color-text: #111827;
+  --color-text-muted: #5f6b7a;
+  --color-primary: #2563eb;
+  --color-primary: #6d28d9; /* premium violet */
+  --color-primary-hover: #5b21b6;
+  --color-danger: #dc2626;
+  --color-focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.4);
+  /* Other variables */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --font-sans: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-full: 999px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --transition-fast: 120ms cubic-bezier(.4,0,.2,1);
+  /* Chat bubble & control overrides (theme-aware) */
+  --bubble-user-bg: linear-gradient(180deg, #e6f0ff, #ffffff);
+  --bubble-user-text: var(--color-text);
+  --bubble-user-border: rgba(0,0,0,0.06);
+
+  --bubble-ai-bg: var(--color-bg-alt);
+  --bubble-ai-text: var(--color-text);
+  --bubble-ai-border: var(--color-border);
+
+  --action-btn-bg: var(--color-surface);
+  --action-btn-border: var(--color-border);
+  --action-btn-color: var(--color-text-muted);
+  --action-btn-hover-bg: rgba(0,0,0,0.04);
+  --action-btn-hover-color: var(--color-text);
+
+  --send-btn-hover-bg: rgba(0,0,0,0.06);
+}
+
+/* --- Dark Theme (Applied via button) --- */
+html[data-theme="dark"] {
+    --color-bg: #0f172a;
+    --color-bg-alt: #1e293b;
+    --color-surface: #1e293b;
+    --color-border: #334155;
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+  --color-primary: #7c3aed;
+  --color-primary-hover: #6d28d9;
+    --color-danger: #f87171;
+  --color-focus-ring: 0 0 0 3px rgba(124,58,237,0.28);
+    --shadow-xs: 0 1px 2px rgba(0,0,0,0.6);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.7), 0 1px 2px rgba(0,0,0,0.5);
+
+  /* Dark-theme chat/browser control overrides */
+  --bubble-user-bg: linear-gradient(180deg, #1f1f1f, #161616);
+  --bubble-user-text: #fafafa;
+  --bubble-user-border: #2a2a2a;
+
+  --bubble-ai-bg: #0d0d0d;
+  --bubble-ai-text: #f8fafc;
+  --bubble-ai-border: #1e1e1e;
+
+  --action-btn-bg: #0d0d0d;
+  --action-btn-border: #1e1e1e;
+  --action-btn-color: #6a6a6a;
+  --action-btn-hover-bg: #151515;
+  --action-btn-hover-color: #ffffff;
+
+  --send-btn-hover-bg: #4a4a4d;
+}
+
+/* Fancy Theme Toggle Button
+   - This button forces the UI into light or dark regardless of system preferences.
+   - Button appearance responds to the document-level `data-theme` attribute.
+*/
+.theme-toggle {
+  --w: 72px;
+  --h: 36px;
+  display: inline-grid;
+  align-items: center;
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  padding: 6px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--color-focus-ring);
+}
+
+.theme-toggle .knob {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: calc(var(--h) - 12px);
+  height: calc(var(--h) - 12px);
+  border-radius: 50%;
+  background: var(--color-surface);
+  display: block;
+  transition: transform var(--transition-fast) ease, background var(--transition-fast);
+  box-shadow: 0 4px 8px rgba(2,6,23,0.12);
+}
+
+.theme-toggle .icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 9px;
+  color: var(--color-primary);
+  transition: opacity var(--transition-fast) ease, transform var(--transition-fast);
+}
+
+.theme-toggle .icon.sun {
+  left: 12px;
+}
+
+.theme-toggle .icon.moon {
+  right: 12px;
+}
+
+/* When dark theme is active, move the knob to the right and swap icon emphasis */
+html[data-theme="dark"] .theme-toggle .knob {
+  transform: translateX(calc(var(--w) - var(--h)));
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
+}
+
+html[data-theme="dark"] .theme-toggle {
+  border-color: rgba(255,255,255,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+}
+
+html[data-theme="dark"] .theme-toggle .icon.sun {
+  opacity: 0.25;
+  transform: scale(0.92);
+}
+
+html[data-theme="dark"] .theme-toggle .icon.moon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Light theme icon states */
+.theme-toggle .icon.sun { opacity: 1; transform: scale(1); }
+.theme-toggle .icon.moon { opacity: 0.25; transform: scale(0.92); }
+
+/* Small screen tweak */
+@media (max-width: 420px) {
+  .theme-toggle { --w: 62px; --h: 32px; }
+}
+
+/* Utility: visually hidden (screen reader only) */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
