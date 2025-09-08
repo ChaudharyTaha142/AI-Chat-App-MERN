@@ -34,7 +34,7 @@ const Home = () => {
         if (title) title = title.trim();
         if (!title) return;
 
-        const response = await axios.post("http://localhost:3000/api/chat", {
+        const response = await axios.post("https://ai-chat-app-mern.onrender.com/api/chat", {
             title
         }, {
             withCredentials: true
@@ -45,12 +45,12 @@ const Home = () => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/chat", { withCredentials: true })
+        axios.get("https://ai-chat-app-mern.onrender.com/api/chat", { withCredentials: true })
             .then(response => {
                 dispatch(setChats(response.data.chats.reverse()));
             });
 
-        const tempSocket = io("http://localhost:3000", {
+        const tempSocket = io("https://ai-chat-app-mern.onrender.com", {
             withCredentials: true,
         });
 
@@ -117,7 +117,7 @@ const Home = () => {
     }
 
     const getMessages = async (chatId) => {
-        const response = await axios.get(`http://localhost:3000/api/chat/messages/${chatId}`, { withCredentials: true });
+        const response = await axios.get(`https://ai-chat-app-mern.onrender.com/api/chat/messages/${chatId}`, { withCredentials: true });
         console.log("Fetched messages:", response.data.messages);
         setMessages(response.data.messages.map(m => ({
             _id: m._id,
@@ -144,7 +144,7 @@ const Home = () => {
                 onNewChat={handleNewChat}
                 onDeleteChat={async (id) => {
                     try {
-                        await axios.delete(`http://localhost:3000/api/chat/${id}`, { withCredentials: true });
+                        await axios.delete(`https://ai-chat-app-mern.onrender.com/api/chat/${id}`, { withCredentials: true });
                         dispatch(removeChat(id));
                         // if the deleted chat was active, clear messages
                         if (activeChatId === id) setMessages([]);
@@ -162,7 +162,7 @@ const Home = () => {
                         title = title.trim();
                         if (!title || title === currentTitle) return;
 
-                        await axios.put(`http://localhost:3000/api/chat/${id}`, { title }, { withCredentials: true });
+                        await axios.put(`https://ai-chat-app-mern.onrender.com/api/chat/${id}`, { title }, { withCredentials: true });
                         // update local chats from response or optimistically
                         dispatch(setChats(chats.map(c => (c._id === id || c.id === id) ? { ...c, title } : c)));
                     } catch (err) {
